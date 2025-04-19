@@ -6,6 +6,9 @@ document.addEventListener("keydown", (e) => {
     changeAllColors();
   }
 });
+document.getElementById("btnForGenerator").addEventListener("click", () => {
+  changeAllColors();
+});
 
 function changeAllColors() {
   containers.forEach((container) => {
