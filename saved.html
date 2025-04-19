@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Saved Colors</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: "Outfit", sans-serif;
+      background-color: #f0f0f0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-size: 2rem;
+    }
+
+    .saved-colors {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .color-card {
+      width: 150px;
+      height: 150px;
+      border-radius: 16px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      color: white;
+      padding: 10px;
+      font-weight: bold;
+      transition: transform 0.2s ease;
+    }
+
+    .color-card:hover {
+      transform: scale(1.05);
+    }
+
+    .color-labels {
+      text-shadow: 0 0 3px rgba(0,0,0,0.4);
+    }
+
+    .clear-btn {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-weight: bold;
+      background-color: crimson;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Saved Colors</h1>
+  <div class="saved-colors" id="savedColorsContainer"></div>
+  <button class="clear-btn" onclick="clearSavedColors()">Clear All</button>
+
+  <script>
+    // Load colors from localStorage
+    const savedColors = JSON.parse(localStorage.getItem("savedColors")) || [];
+    const container = document.getElementById("savedColorsContainer");
+
+    if (savedColors.length === 0) {
+      container.innerHTML = "<p>No colors saved yet.</p>";
+    } else {
+      savedColors.forEach(color => {
+        const card = document.createElement("div");
+        card.classList.add("color-card");
+        card.style.backgroundColor = color.hex;
+
+        card.innerHTML = `
+          <div class="color-labels">
+            <p>${color.name}</p>
+            <p>${color.hex}</p>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function clearSavedColors() {
+      if (confirm("Are you sure you want to clear all saved colors?")) {
+        localStorage.removeItem("savedColors");
+        location.reload();
+      }
+    }
+  </script>
+
+</body>
+</html>
